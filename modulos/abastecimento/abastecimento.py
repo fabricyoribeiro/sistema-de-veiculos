@@ -1,8 +1,10 @@
 class Abastecimento:
-  def __init__(self, viagem_id, veiculo_id, valor_gasto, km_atual, id=None):
+  def __init__(self,data_abastecimento, viagem_id, veiculo_id, posto_id, valor_gasto, km_atual, id=None):
     self.id = id
+    self.data_abastecimento = data_abastecimento
     self.viagem_id = viagem_id
     self.veiculo_id = veiculo_id
+    self.posto_id = posto_id
     self.valor_gasto = valor_gasto
     self.km_atual = km_atual
   
