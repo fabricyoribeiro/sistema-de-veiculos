@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.register_blueprint(app_empresa)
 
 
-app.run()
+#app.run()
 
 #print(ConnectDataBase().get_instance())
 
@@ -18,12 +18,12 @@ app.run()
 #motoristas = dao_motorista.get_all()
 #print(motoristas)
 
-#dao_posto = PostoDao()
-#posto = Posto(nome="posto1", #cidade="caruaru", cnpj="1234567")
-
+dao_posto = PostoDao()
+posto = Posto(nome="posto1", cidade="caruaru", cnpj="1234567")
+dao_posto.update_posto_by_id("cnpj", "0000000", 3 )
 #dao_posto.salvar(posto)
 
-#postos = dao_posto.get_all()
-#print(postos)
+postos = dao_posto.get_all()
+print(postos)
 #print("--------------------------------")
 #print(dao_posto.get_por_id(1))

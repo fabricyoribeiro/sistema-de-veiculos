@@ -1,6 +1,6 @@
-from flask import  make_response, jsonify, request, Blueprint
+from flask import Flask, make_response, jsonify, request, Blueprint
 
-from modulos.posto.posto import Posto
+from modulos.posto import Posto
 from modulos.posto.dao import PostoDao
 
 app_empresa = Blueprint('example_blueprint', __name__)
@@ -14,27 +14,15 @@ def get_postos():
     data = [posto.get_data_dict() for posto in postos]
     return make_response(jsonify(data))
 
-@app_empresa.route(f'/{app_name}/<int:id>', methods=['GET'])
-def get_posto_by_id(id):
-    posto = dao_posto.get_por_id(id)
-    data = posto.get_data_dict()
-    return make_response(jsonify(data))
-
 
 @app_empresa.route(f'/{app_name}/add/', methods=['POST'])
 def add_posto():
     data = request.form.to_dict(flat=True)
-    print(data)
-    print(data.get('nome'))
-    posto = dao_posto.get_by_cnpj(data.get('cnpj')) 
+    posto = dao_posto.get_por_id(data.get('id'))
     if posto:
-        return make_response('Cnpj do posto já existe', 400)
+        return make_response('Id do posto já existe', 400)
     posto = Posto(**data)
     posto = dao_posto.salvar(posto)
     return make_response({
         'id': posto.id
     })
-
-@app_empresa.route(f'/{app_name}/atualizar/<int:id>', methods=['PUT'])
-def update_posto():
-    pass
