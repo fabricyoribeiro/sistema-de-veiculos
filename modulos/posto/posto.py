@@ -7,3 +7,6 @@ class Posto:
   
   def __str__(self):
     return f'Nome: {self.nome}, cidade: {self.cidade}, cnpj: {self.cnpj}, id: {self.id}'
+  
+  def get_data_dict(self):
+    return {'id': self.id, 'nome': self.nome, 'cidade': self.cidade, 'cnpj': self.cnpj}
