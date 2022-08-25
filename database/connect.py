@@ -5,7 +5,7 @@ class ConnectDataBase:
             host="localhost",
             database="controle_gastos_veiculos",
             user="postgres",
-            password="eduardo"
+            password="18102002"
         )
     def get_instance(self):
         return self._connect

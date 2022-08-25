@@ -35,6 +35,21 @@ def add_posto():
         'id': posto.id
     })
 
-@app_empresa.route(f'/{app_name}/atualizar/<int:id>', methods=['PUT'])
-def update_posto():
-    pass
+@app_empresa.route(f'/{app_name}/atualizar/<int:id>/', methods=['PUT'])
+def update_posto(id):
+    data = request.form.to_dict(flat=True)
+
+    postoOld = dao_posto.get_por_id(id)
+
+    if not postoOld:
+        return make_response('O id informado não existe ')
+    
+    postoNew = Posto(**data)
+    dao_posto.update_posto(postoNew, postoOld)
+    return make_response({
+        'id': postoOld.id
+    })
+
+
+
+    
