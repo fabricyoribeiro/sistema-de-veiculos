@@ -14,6 +14,12 @@ def get_postos():
     data = [posto.get_data_dict() for posto in postos]
     return make_response(jsonify(data))
 
+@app_empresa.route(f'/{app_name}/<int:id>', methods=['GET'])
+def get_posto_by_id(id):
+    posto = dao_posto.get_por_id(id)
+    data = posto.get_data_dict()
+    return make_response(jsonify(data))
+
 
 @app_empresa.route(f'/{app_name}/add/', methods=['POST'])
 def add_posto():
@@ -28,3 +34,7 @@ def add_posto():
     return make_response({
         'id': posto.id
     })
+
+@app_empresa.route(f'/{app_name}/update/<int:id>', methods=['PUT'])
+def update_posto():
+    pass

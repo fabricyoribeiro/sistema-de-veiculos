@@ -63,4 +63,7 @@ class PostoDao:
         cursor.close()
         return posto
 
+    def update_posto_by_id(self, id):
+        pass  
+
     #TODO: atualizar posto
