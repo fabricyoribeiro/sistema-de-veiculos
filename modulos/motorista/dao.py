@@ -9,6 +9,10 @@ class MotoristaDao:
                    ' values(%s, %s, %s) RETURNING id'
     _SELECT_ALL = f'SELECT * FROM {_TABLE_NAME}'
     _SELECT_BY_ID = 'SELECT * FROM {} WHERE ID={}'
+    _SELECT_BY_CPF = "SELECT * FROM {} WHERE CPF='{}'"
+    _DELETE = 'DELETE FROM {} WHERE ID={}'
+    _UPDATE = "UPDATE {} SET {}='{}', {}='{}', {}='{}' WHERE ID={}"
+
 
     def __init__(self):
         self.database = ConnectDataBase().get_instance()
@@ -50,4 +54,33 @@ class MotoristaDao:
         cursor.close()
         return motorista
 
-    #TODO: atualizar motorista
+    def get_by_cpf(self, cpf):
+        cursor = self.database.cursor()
+        cursor.execute(self._SELECT_BY_CPF.format(self._TABLE_NAME, cpf))
+        coluns_name = [desc[0] for desc in cursor.description]
+        motorista = cursor.fetchone()
+        if not motorista:
+            return None
+        data = dict(zip(coluns_name, motorista))
+        motorista = Motorista(**data)
+        cursor.close()
+        return motorista
+
+    def update_motorista(self, motoristaNew, motoristaOld):
+        #posto = self.get_posto_by_id(id)
+        cursor = self.database.cursor()
+        cursor.execute(self._UPDATE.format(self._TABLE_NAME,
+            "nome",  motoristaNew.nome, 
+            "cpf", motoristaNew.cpf, 
+            "salario", motoristaNew.salario, 
+            motoristaOld.id
+        ))
+        self.database.commit()
+        cursor.close()
+
+    def delete_motorista(self, id):
+        #posto = self.get_posto_by_id(id)
+        cursor = self.database.cursor()
+        cursor.execute(self._DELETE.format(self._TABLE_NAME, id))
+        self.database.commit()
+        cursor.close()

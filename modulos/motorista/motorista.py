@@ -7,4 +7,6 @@ class Motorista:
 
   def __str__(self):
     return f'Nome: {self.nome}, id: {self.id}, cpf: {self.cpf}, salario: {self.salario}'
-    
+  
+  def get_data_dict(self):
+    return {'id': self.id, 'nome': self.nome, 'cpf': self.cpf, 'salario': self.salario}

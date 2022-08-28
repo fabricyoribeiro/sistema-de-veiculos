@@ -1,4 +1,5 @@
 from database.connect import ConnectDataBase
+from modulos.motorista.controller import app_motorista
 from modulos.motorista.dao import MotoristaDao
 from modulos.posto.dao import PostoDao
 from modulos.posto.posto import Posto
@@ -8,7 +9,7 @@ from modulos.posto.controller import app_empresa
 
 app = Flask(__name__)
 app.register_blueprint(app_empresa)
-
+app.register_blueprint(app_motorista)
 
 app.run()
 

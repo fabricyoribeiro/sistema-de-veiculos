@@ -80,11 +80,9 @@ class PostoDao:
     def delete_posto(self, id):
             #posto = self.get_posto_by_id(id)
             cursor = self.database.cursor()
-            cursor.execute(self._DELETE.format(self._TABLE_NAME, id
-            ))
+            cursor.execute(self._DELETE.format(self._TABLE_NAME, id))
             self.database.commit()
             cursor.close()
 
         
     
-    #TODO: atualizar posto
