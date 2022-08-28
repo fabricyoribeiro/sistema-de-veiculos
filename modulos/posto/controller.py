@@ -50,6 +50,20 @@ def update_posto(id):
         'id': postoOld.id
     })
 
+@app_empresa.route(f'/{app_name}/deletar/<int:id>/', methods=['DELETE'])
+def delete_posto(id):
+
+    posto = dao_posto.get_por_id(id)
+
+    if not posto:
+        return make_response('O id informado não existe ')
+    dao_posto.delete_posto(id)
+    return make_response({
+        'Detetado com sucesso': True
+    })
+
+
+
 
 
     

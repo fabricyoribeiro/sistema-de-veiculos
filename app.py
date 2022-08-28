@@ -19,10 +19,10 @@ app.run()
 #print(motoristas)
 
 dao_posto = PostoDao()
-postoNew = Posto(nome="posto1", cidade="caruaru", cnpj="1234567")
-postoOld = dao_posto.get_por_id(2)
+#postoNew = Posto(nome="posto1", cidade="caruaru", cnpj="1234567")
+#postoOld = dao_posto.get_por_id(2)
 
-dao_posto.update_posto(postoNew, postoOld)
+#dao_posto.delete_posto(6)
 #dao_posto.salvar(posto)
 
 postos = dao_posto.get_all()
