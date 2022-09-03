@@ -1,4 +1,5 @@
 class Marca:
+  VALUES = ['marca', 'classificacao']
   def __init__(self, marca, classificacao,id=None):
     self.id = id
     self.marca = marca

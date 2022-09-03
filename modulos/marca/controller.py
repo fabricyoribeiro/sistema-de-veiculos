@@ -1,3 +1,4 @@
+from ntpath import join
 from flask import Flask, make_response, jsonify, request, Blueprint
 
 from modulos.marca.dao import MarcaDao
@@ -21,11 +22,13 @@ def get_marcas():
 def add_marca():
     data = request.form.to_dict(flat=True)
 
-    # for key, value in data.items():
-    #     if key or value is None:
-    #         print(key, value)
-    #         return f'{key}, {value}'
-
+    erros = []
+    for key in Marca.VALUES:
+        if key not in data.keys():
+            erros.append({'field': key, 'mensage': "Este campo é obrigátorio."})
+    if erros:
+        return make_response({'errors': erros}, 400)
+    
     print(data)
     print(data.get('marca'))
     marca = dao_marca.get_by_marca(data.get('marca')) 

@@ -6,12 +6,14 @@ from modulos.posto.posto import Posto
 from flask import Flask
 from modulos.posto.controller import app_empresa
 from modulos.marca.controller import app_marca
+from modulos.modelo.controller import app_modelo
 
 
 app = Flask(__name__)
 app.register_blueprint(app_empresa)
 app.register_blueprint(app_motorista)
 app.register_blueprint(app_marca)
+app.register_blueprint(app_modelo)
 
 app.run()
 

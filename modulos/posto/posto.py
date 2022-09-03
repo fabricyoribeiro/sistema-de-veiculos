@@ -1,4 +1,5 @@
 class Posto:
+  VALUES=['nome', 'cidade', 'cnpj']
   def __init__(self, nome, cidade, cnpj, id=None):
     self.id = id
     self.nome = nome

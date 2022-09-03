@@ -20,6 +20,14 @@ def get_motoristas():
 @app_motorista.route(f'/{app_name}/add/', methods=['POST'])
 def add_motorista():
     data = request.form.to_dict(flat=True)
+
+    erros = []
+    for key in Motorista.VALUES:
+        if key not in data.keys():
+            erros.append({'field': key, 'mensage': "Este campo é obrigátorio."})
+    if erros:
+        return make_response({'errors': erros}, 400)
+
     print(data)
     print(data.get('nome'))
     motorista = dao_motorista.get_by_cpf(data.get('cpf')) 

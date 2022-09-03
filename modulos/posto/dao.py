@@ -83,6 +83,3 @@ class PostoDao:
             cursor.execute(self._DELETE.format(self._TABLE_NAME, id))
             self.database.commit()
             cursor.close()
-
-        
-    

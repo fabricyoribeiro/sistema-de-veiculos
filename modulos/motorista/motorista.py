@@ -1,4 +1,5 @@
 class Motorista:
+  VALUES=['nome', 'cpf', 'salario']
   def __init__(self, nome, cpf, salario, id=None):
     self.id = id
     self.nome = nome

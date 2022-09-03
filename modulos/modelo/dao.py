@@ -1,15 +1,15 @@
 from database.connect import ConnectDataBase
-from modulos.marca.marca import Marca
+from modulos.modelo.modelo import Modelo
 
 
-class MarcaDao:
-    _TABLE_NAME = 'MARCA'
+class ModeloDao:
+    _TABLE_NAME = 'MODELO'
 
-    _INSERT_INTO = f'INSERT INTO {_TABLE_NAME}(marca, classificacao)' \
+    _INSERT_INTO = f'INSERT INTO {_TABLE_NAME}(descricao, marca_id)' \
                    ' values(%s, %s) RETURNING id'
     _SELECT_ALL = f'SELECT * FROM {_TABLE_NAME}'
     _SELECT_BY_ID = 'SELECT * FROM {} WHERE ID={}'
-    _SELECT_BY_MARCA = "SELECT * FROM {} WHERE MARCA='{}'"
+    _SELECT_BY_DESCRICAO = "SELECT * FROM {} WHERE DESCRICAO='{}'"
     _DELETE = 'DELETE FROM {} WHERE ID={}'
     _UPDATE = "UPDATE {} SET {}='{}', {}='{}'  WHERE ID={}"
 
@@ -17,67 +17,67 @@ class MarcaDao:
     def __init__(self):
         self.database = ConnectDataBase().get_instance()
 
-    def salvar(self, marca):
-        if marca.id is None:
+    def salvar(self, modelo):
+        if modelo.id is None:
             cursor = self.database.cursor()
-            cursor.execute(self._INSERT_INTO, (marca.marca, marca.classificacao))
+            cursor.execute(self._INSERT_INTO, (modelo.descricao, modelo.marca_id))
             id = cursor.fetchone()[0]
             self.database.commit()
             cursor.close()
-            marca.id = id
-            return marca
+            modelo.id = id
+            return modelo
         else:
             raise Exception('Não é possível salvar')
 
     def get_all(self):
-        marcas = []
+        modelos = []
         cursor = self.database.cursor()
         cursor.execute(self._SELECT_ALL)
-        all_marcas = cursor.fetchall()
+        all_modelos = cursor.fetchall()
         coluns_name = [desc[0] for desc in cursor.description]
-        for marca_query in all_marcas:
-            data = dict(zip(coluns_name, marca_query))
-            marca = Marca(**data)
-            marcas.append(marca)
+        for modelo_query in all_modelos:
+            data = dict(zip(coluns_name, modelo_query))
+            modelo = Modelo(**data)
+            modelos.append(modelo)
         cursor.close()
-        return marcas
+        return modelos
 
     def get_por_id(self, id):
         cursor = self.database.cursor()
         cursor.execute(self._SELECT_BY_ID.format(self._TABLE_NAME, id))
         coluns_name = [desc[0] for desc in cursor.description]
-        marca = cursor.fetchone()
-        if not marca:
+        modelo = cursor.fetchone()
+        if not modelo:
             return None
-        data = dict(zip(coluns_name, marca))
-        marca = Marca(**data)
+        data = dict(zip(coluns_name, modelo))
+        modelo = Modelo(**data)
         cursor.close()
-        return marca
+        return modelo
 
-    def get_by_marca(self, marca):
+    def get_by_descricao(self, modelo):
         cursor = self.database.cursor()
-        cursor.execute(self._SELECT_BY_MARCA.format(self._TABLE_NAME, marca))
+        cursor.execute(self._SELECT_BY_DESCRICAO.format(self._TABLE_NAME, modelo))
         coluns_name = [desc[0] for desc in cursor.description]
-        marca = cursor.fetchone()
-        if not marca:
+        modelo = cursor.fetchone()
+        if not modelo:
             return None
-        data = dict(zip(coluns_name, marca))
-        marca = Marca(**data)
+        data = dict(zip(coluns_name, modelo))
+        modelo = Modelo(**data)
         cursor.close()
-        return marca
+        return modelo
 
-    def update_marca(self, marcaNew, marcaOld):
+    def update_modelo(self, modeloNew, modeloOld):
         #posto = self.get_posto_by_id(id)
         cursor = self.database.cursor()
         cursor.execute(self._UPDATE.format(self._TABLE_NAME,
-            "marca",  marcaNew.marca,
-            "classificacao", marcaNew.classificacao,
-            marcaOld.id
+            "descricao",  modeloNew.descricao,
+            "marca_id", modeloNew.marca_id,
+            modeloOld.id
         ))
         self.database.commit()
         cursor.close()
 
-    def delete_marca(self, id):
+    def delete_modelo(self, id):
         #posto = self.get_posto_by_id(id)
         cursor = self.database.cursor()
         cursor.execute(self._DELETE.format(self._TABLE_NAME, id))
