@@ -26,14 +26,17 @@ def add_modelo():
     data = request.form.to_dict(flat=True)
 
     erros = []
+
+    print(data.keys())
+    print(Modelo.VALUES)
     for key in Modelo.VALUES:
-        if key not in data.keys():
+        if key not in data.keys()  or data[key] =='':
             erros.append({'field': key, 'mensage': "Este campo é obrigátorio."})
     if erros:
         return make_response({'errors': erros}, 400)
     print(data)
-    if data.get('marca_id')=='':
-        return make_response("O id não foi informado")
+    # if data.get('marca_id')=='':
+    #     return make_response("O id da marca não foi informado")
         
     marca = dao_marca.get_por_id(data.get('marca_id'))
 

@@ -28,13 +28,13 @@ def add_veiculo():
 
     erros = []
     for key in Veiculo.VALUES:
-        if key not in data.keys():
+        if key not in data.keys() or data[key] =='':
             erros.append({'field': key, 'mensage': "Este campo é obrigátorio."})
     if erros:
         return make_response({'errors': erros}, 400)
     print(data)
-    if data.get('modelo_id')=='':
-        return make_response("O id do modelo não foi informado")
+    # if data.get('modelo_id')=='':
+    #     return make_response("O id do modelo não foi informado")
         
     modelo = dao_modelo.get_por_id(data.get('modelo_id'))
 

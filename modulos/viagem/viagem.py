@@ -7,3 +7,11 @@ class Viagem:
   
   def __str__(self) :
     return f'Veiculo id: {self.veiculo_id}, Motorista id: {self.motorista_id}, Destino: {self.destino}'
+  
+  def get_data_dict(self):
+    return {
+      'id': self.id,
+      'veiculo_id': self.veiculo_id,
+      'motorista_id': self.motorista_id,
+      'destino': self.destino
+    }
