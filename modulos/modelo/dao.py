@@ -67,7 +67,6 @@ class ModeloDao:
         return modelo
 
     def update_modelo(self, modeloNew, modeloOld):
-        #posto = self.get_posto_by_id(id)
         cursor = self.database.cursor()
         cursor.execute(self._UPDATE.format(self._TABLE_NAME,
             "descricao",  modeloNew.descricao,
@@ -78,7 +77,6 @@ class ModeloDao:
         cursor.close()
 
     def delete_modelo(self, id):
-        #posto = self.get_posto_by_id(id)
         cursor = self.database.cursor()
         cursor.execute(self._DELETE.format(self._TABLE_NAME, id))
         self.database.commit()

@@ -3,25 +3,25 @@ from flask import  make_response, jsonify, request, Blueprint
 from modulos.posto.posto import Posto
 from modulos.posto.dao import PostoDao
 
-app_empresa = Blueprint('example_blueprint', __name__)
+app_posto = Blueprint('posto_blueprint', __name__)
 app_name = 'posto'
 dao_posto = PostoDao()
 
 
-@app_empresa.route(f'/{app_name}/', methods=['GET'])
+@app_posto.route(f'/{app_name}/', methods=['GET'])
 def get_postos():
     postos = dao_posto.get_all()
     data = [posto.get_data_dict() for posto in postos]
     return make_response(jsonify(data))
 
-@app_empresa.route(f'/{app_name}/<int:id>', methods=['GET'])
+@app_posto.route(f'/{app_name}/<int:id>', methods=['GET'])
 def get_posto_by_id(id):
     posto = dao_posto.get_por_id(id)
     data = posto.get_data_dict()
     return make_response(jsonify(data))
 
 
-@app_empresa.route(f'/{app_name}/add/', methods=['POST'])
+@app_posto.route(f'/{app_name}/add/', methods=['POST'])
 def add_posto():
     data = request.form.to_dict(flat=True)
 
@@ -43,7 +43,7 @@ def add_posto():
         'id': posto.id
     })
 
-@app_empresa.route(f'/{app_name}/atualizar/<int:id>/', methods=['PUT'])
+@app_posto.route(f'/{app_name}/atualizar/<int:id>/', methods=['PUT'])
 def update_posto(id):
     data = request.form.to_dict(flat=True)
 
@@ -58,7 +58,7 @@ def update_posto(id):
         'id': postoOld.id
     })
 
-@app_empresa.route(f'/{app_name}/deletar/<int:id>/', methods=['DELETE'])
+@app_posto.route(f'/{app_name}/deletar/<int:id>/', methods=['DELETE'])
 def delete_posto(id):
 
     posto = dao_posto.get_por_id(id)

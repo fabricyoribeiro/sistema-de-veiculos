@@ -67,7 +67,6 @@ class MotoristaDao:
         return motorista
 
     def update_motorista(self, motoristaNew, motoristaOld):
-        #posto = self.get_posto_by_id(id)
         cursor = self.database.cursor()
         cursor.execute(self._UPDATE.format(self._TABLE_NAME,
             "nome",  motoristaNew.nome, 
@@ -79,7 +78,6 @@ class MotoristaDao:
         cursor.close()
 
     def delete_motorista(self, id):
-        #posto = self.get_posto_by_id(id)
         cursor = self.database.cursor()
         cursor.execute(self._DELETE.format(self._TABLE_NAME, id))
         self.database.commit()

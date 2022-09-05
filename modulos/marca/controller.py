@@ -29,7 +29,6 @@ def add_marca():
     if erros:
         return make_response({'errors': erros}, 400)
     
-    print(data)
     print(data.get('marca'))
     marca = dao_marca.get_by_marca(data.get('marca')) 
     if marca:

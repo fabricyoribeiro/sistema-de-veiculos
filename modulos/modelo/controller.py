@@ -32,18 +32,23 @@ def add_modelo():
     for key in Modelo.VALUES:
         if key not in data.keys()  or data[key] =='':
             erros.append({'field': key, 'mensage': "Este campo é obrigátorio."})
+    
+    if data.get('marca_id') != None:
+        for i in data['marca_id']:
+            if i.isdigit()==False:
+                erros.append({'field': 'marca_id', 'mensage': 'Este campo só aceita números inteiros'})
+                break
+
     if erros:
         return make_response({'errors': erros}, 400)
     print(data)
-    # if data.get('marca_id')=='':
-    #     return make_response("O id da marca não foi informado")
-        
+   
     marca = dao_marca.get_por_id(data.get('marca_id'))
 
     if not  marca:
         return make_response({'erro': "id da marca não existe."}, 400)
     
-    print(data)
+
     print(data.get('descricao'))
     modelo = dao_modelo.get_by_descricao(data.get('descricao')) 
     if modelo:

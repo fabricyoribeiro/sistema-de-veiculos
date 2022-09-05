@@ -30,19 +30,29 @@ def add_veiculo():
     for key in Veiculo.VALUES:
         if key not in data.keys() or data[key] =='':
             erros.append({'field': key, 'mensage': "Este campo é obrigátorio."})
+
+    if data.get('modelo_id') != None:
+        for i in data['modelo_id']:
+            if i.isdigit()==False:
+                erros.append({'field': 'modelo_id', 'mensage': 'Este campo só aceita números inteiros'})
+                break
+
+    if data.get('km_total') != None:
+        for i in data['km_total']:
+            if i.isdigit() == False:
+                if i not in '.':
+                    erros.append({'field': 'km_total', 'mensage': 'Este campo só aceita números'})
+                break
+
     if erros:
         return make_response({'errors': erros}, 400)
     print(data)
-    # if data.get('modelo_id')=='':
-    #     return make_response("O id do modelo não foi informado")
-        
+    
     modelo = dao_modelo.get_por_id(data.get('modelo_id'))
 
     if not  modelo:
-        return make_response({'erro': "id da modelo não existe."}, 400)
+        return make_response({'erro': "id do modelo não existe."}, 400)
     
-    print(data)
-    # print(data.get('descricao'))
     veiculo = dao_veiculo.get_by_placa(data.get('placa')) 
     if veiculo:
         return make_response('Placa já existe', 400)
@@ -70,7 +80,7 @@ def update_veiculo(id):
 
     modelo = dao_modelo.get_por_id(data.get('modelo_id'))
     if not modelo:
-        return make_response({'erro': "id da modelo não existe."}, 400)
+        return make_response({'erro': "id do modelo não existe."}, 400)
 
     if not veiculoOld:
         return make_response('O id informado não existe ')

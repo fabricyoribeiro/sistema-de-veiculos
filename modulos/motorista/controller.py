@@ -25,6 +25,13 @@ def add_motorista():
     for key in Motorista.VALUES:
         if key not in data.keys():
             erros.append({'field': key, 'mensage': "Este campo é obrigátorio."})
+
+    for i in data['salario']:
+        if i.isdigit() == False:
+            if i not in '.':
+                erros.append({'field': 'salario', 'mensage': 'Este campo só aceita números'})
+                break
+
     if erros:
         return make_response({'errors': erros}, 400)
 

@@ -1,4 +1,5 @@
 class Viagem:
+  VALUES=["veiculo_id", "motorista_id", "destino"]
   def __init__(self, veiculo_id, motorista_id, destino, id=None):
     self.id = id
     self.veiculo_id = veiculo_id
