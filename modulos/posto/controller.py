@@ -32,7 +32,6 @@ def add_posto():
     if erros:
         return make_response({'errors': erros}, 400)
 
-    print(data)
     print(data.get('nome'))
     posto = dao_posto.get_by_cnpj(data.get('cnpj')) 
     if posto:
@@ -46,6 +45,13 @@ def add_posto():
 @app_posto.route(f'/{app_name}/atualizar/<int:id>/', methods=['PUT'])
 def update_posto(id):
     data = request.form.to_dict(flat=True)
+
+    erros = []
+    for key in Posto.VALUES:
+        if key not in data.keys():
+            erros.append({'field': key, 'mensage': "Este campo é obrigátorio."})
+    if erros:
+        return make_response({'errors': erros}, 400)
 
     postoOld = dao_posto.get_por_id(id)
 

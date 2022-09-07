@@ -53,6 +53,13 @@ def get_marca_by_id(id):
 def update_marca(id):
     data = request.form.to_dict(flat=True)
 
+    erros = []
+    for key in Marca.VALUES:
+        if key not in data.keys():
+            erros.append({'field': key, 'mensage': "Este campo é obrigátorio."})
+    if erros:
+        return make_response({'errors': erros}, 400)
+
     marcaOld = dao_marca.get_por_id(id)
 
     if not marcaOld:

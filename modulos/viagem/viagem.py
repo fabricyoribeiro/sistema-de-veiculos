@@ -20,7 +20,7 @@ class Viagem:
     motorista = dao_motorista.get_por_id(self.motorista_id)
     return {
       'id': self.id,
-      'veiculo_id': veiculo.get_data_dict(),
-      'motorista_id': motorista.get_data_dict(),
+      'veiculo': veiculo.get_data_dict(),
+      'motorista': motorista.get_data_dict(),
       'destino': self.destino
     }

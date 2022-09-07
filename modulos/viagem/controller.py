@@ -47,7 +47,6 @@ def add_viagem():
 
     if erros:
         return make_response({'errors': erros}, 400)
-    print(data)
    
     veiculo = dao_veiculo.get_por_id(data.get('veiculo_id'))
         
@@ -78,6 +77,26 @@ def get_viagem_by_id(id):
 @app_viagem.route(f'/{app_name}/atualizar/<int:id>/', methods=['PUT'])
 def update_viagem(id):
     data = request.form.to_dict(flat=True)
+
+    erros = []
+    for key in Viagem.VALUES:
+        if key not in data.keys() or data[key] =='':
+            erros.append({'field': key, 'mensage': "Este campo é obrigátorio."})
+    
+    if data.get('veiculo_id') != None:
+        for i in data['veiculo_id']:
+            if i.isdigit()==False:
+                erros.append({'field': 'veiculo_id', 'mensage': 'Este campo só aceita números inteiros'})
+                break
+    
+    if data.get('motorista_id') != None:
+        for i in data['motorista_id']:
+            if i.isdigit()==False:
+                erros.append({'field': 'motorista_id', 'mensage': 'Este campo só aceita números inteiros'})
+                break
+
+    if erros:
+        return make_response({'errors': erros}, 400)
 
     viagemOld = dao_viagem.get_por_id(id)
 

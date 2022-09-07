@@ -46,7 +46,6 @@ def add_veiculo():
 
     if erros:
         return make_response({'errors': erros}, 400)
-    print(data)
     
     modelo = dao_modelo.get_por_id(data.get('modelo_id'))
 

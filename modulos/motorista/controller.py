@@ -25,12 +25,13 @@ def add_motorista():
     for key in Motorista.VALUES:
         if key not in data.keys():
             erros.append({'field': key, 'mensage': "Este campo é obrigátorio."})
-
-    for i in data['salario']:
-        if i.isdigit() == False:
-            if i not in '.':
-                erros.append({'field': 'salario', 'mensage': 'Este campo só aceita números'})
-                break
+    
+    if data.get('salario') != None:
+        for i in data['salario']:
+            if i.isdigit() == False:
+                if i not in '.':
+                    erros.append({'field': 'salario', 'mensage': 'Este campo só aceita números'})
+                    break
 
     if erros:
         return make_response({'errors': erros}, 400)
@@ -58,7 +59,23 @@ def get_motorista_by_id(id):
 def update_motorista(id):
     data = request.form.to_dict(flat=True)
 
+    erros = []
+    for key in Motorista.VALUES:
+        if key not in data.keys():
+            erros.append({'field': key, 'mensage': "Este campo é obrigátorio."})
+    
+    if data.get('salario') != None:
+        for i in data['salario']:
+            if i.isdigit() == False:
+                if i not in '.':
+                    erros.append({'field': 'salario', 'mensage': 'Este campo só aceita números'})
+                    break
+
+    if erros:
+        return make_response({'errors': erros}, 400)
+
     motoristaOld = dao_motorista.get_por_id(id)
+
 
     if not motoristaOld:
         return make_response('O id informado não existe ')
@@ -73,6 +90,8 @@ def update_motorista(id):
 def delete_motorista(id):
 
     motorista = dao_motorista.get_por_id(id)
+
+    
 
     if not motorista:
         return make_response('O id informado não existe ')

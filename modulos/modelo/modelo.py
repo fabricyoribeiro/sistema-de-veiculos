@@ -15,6 +15,6 @@ class Modelo:
     return {
       'id': self.id,
       'descricao': self.descricao,
-      'marca_id': marca.get_data_dict()
+      'marca': marca.get_data_dict()
     }
     

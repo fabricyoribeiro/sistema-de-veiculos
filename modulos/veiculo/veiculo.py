@@ -18,6 +18,6 @@ class Veiculo:
     return {
       'id': self.id, 
       'placa': self.placa, 
-      'modelo_id': modelo.get_data_dict(), 
+      'modelo': modelo.get_data_dict(), 
       'km_total': self.km_total
       }
