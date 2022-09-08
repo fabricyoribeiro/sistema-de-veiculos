@@ -74,8 +74,6 @@ def update_modelo(id):
 
     erros = []
 
-    print(data.keys())
-    print(Modelo.VALUES)
     for key in Modelo.VALUES:
         if key not in data.keys()  or data[key] =='':
             erros.append({'field': key, 'mensage': "Este campo é obrigátorio."})
@@ -88,8 +86,6 @@ def update_modelo(id):
 
     if erros:
         return make_response({'errors': erros}, 400)
-    print(data)
-   
 
     modeloOld = dao_modelo.get_por_id(id)
 
@@ -98,7 +94,7 @@ def update_modelo(id):
         return make_response({'erro': "id da marca não existe."}, 400)
 
     if not modeloOld:
-        return make_response('O id informado não existe ')
+        return make_response({'erro': 'O id informado não existe'})
     
     modeloNew = Modelo(**data)
     dao_modelo.update_modelo(modeloNew, modeloOld)
@@ -112,7 +108,7 @@ def delete_modelo(id):
     modelo = dao_modelo.get_por_id(id)
 
     if not modelo:
-        return make_response('O id informado não existe ')
+        return make_response({'erro': 'O id informado não existe'})
     dao_modelo.delete_modelo(id)
     return make_response({
         'Detetado com sucesso': True

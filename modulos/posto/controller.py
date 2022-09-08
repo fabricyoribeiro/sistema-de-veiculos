@@ -50,14 +50,15 @@ def update_posto(id):
     for key in Posto.VALUES:
         if key not in data.keys():
             erros.append({'field': key, 'mensage': "Este campo é obrigátorio."})
-    if erros:
-        return make_response({'errors': erros}, 400)
 
     postoOld = dao_posto.get_por_id(id)
 
     if not postoOld:
-        return make_response('O id informado não existe ')
+        erros.append({'errors': 'O id informado não existe.'})
     
+    if erros:
+        return make_response({'errors': erros}, 400)
+        
     postoNew = Posto(**data)
     dao_posto.update_posto(postoNew, postoOld)
     return make_response({
@@ -70,7 +71,7 @@ def delete_posto(id):
     posto = dao_posto.get_por_id(id)
 
     if not posto:
-        return make_response('O id informado não existe ')
+        return make_response({'erro': 'O id informado não existe'})
     dao_posto.delete_posto(id)
     return make_response({
         'Detetado com sucesso': True

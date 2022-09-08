@@ -6,6 +6,7 @@ from modulos.veiculo.dao import VeiculoDao
 from modulos.modelo.modelo import Modelo
 from modulos.modelo.dao import ModeloDao
 from modulos.veiculo.veiculo import Veiculo
+from modulos.viagem.viagem import Viagem
 
 
 
@@ -75,14 +76,29 @@ def get_veiculo_by_id(id):
 def update_veiculo(id):
     data = request.form.to_dict(flat=True)
 
+    erros = []
+    for key in Veiculo.VALUES:
+        if key not in data.keys() or data[key] =='':
+            erros.append({'field': key, 'mensage': "Este campo é obrigátorio."})
+    
+    if data.get('modelo_id') != None:
+        for i in data['modelo_id']:
+            if i.isdigit()==False:
+                erros.append({'field': 'modelo_id', 'mensage': 'Este campo só aceita números inteiros'})
+                break
+
+
     veiculoOld = dao_veiculo.get_por_id(id)
 
     modelo = dao_modelo.get_por_id(data.get('modelo_id'))
     if not modelo:
-        return make_response({'erro': "id do modelo não existe."}, 400)
+        erros.append({'erro': "id do modelo não existe."}, 400)
 
     if not veiculoOld:
-        return make_response('O id informado não existe ')
+        erros.append({'erro': 'O id informado não existe.'})
+
+    if erros:
+        return make_response({'errors': erros}, 400)
     
     veiculoNew = Veiculo(**data)
     dao_veiculo.update_veiculo(veiculoNew, veiculoOld)
@@ -96,7 +112,7 @@ def delete_veiculo(id):
     veiculo = dao_veiculo.get_por_id(id)
 
     if not veiculo:
-        return make_response('O id informado não existe ')
+        return make_response({'erro': 'O id informado não existe'})
     dao_veiculo.delete_veiculo(id)
     return make_response({
         'Detetado com sucesso': True

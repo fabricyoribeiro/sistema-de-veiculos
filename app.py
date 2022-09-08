@@ -6,7 +6,6 @@ from modulos.modelo.controller import app_modelo
 from modulos.veiculo.controller import app_veiculo
 from modulos.viagem.controller import app_viagem
 
-
 app = Flask(__name__)
 app.register_blueprint(app_posto)
 app.register_blueprint(app_motorista)

@@ -32,15 +32,22 @@ def add_motorista():
                 if i not in '.':
                     erros.append({'field': 'salario', 'mensage': 'Este campo só aceita números'})
                     break
+    
+    if data.get('cpf') != None:
+        for i in data['cpf']:
+            if i.isdigit() == False:
+                if i not in '.' or i not in '-':
+                    erros.append({'field': 'cpf', 'mensage': 'Este campo só aceita números.'})
+                    break
 
     if erros:
         return make_response({'errors': erros}, 400)
 
-    print(data)
-    print(data.get('nome'))
     motorista = dao_motorista.get_by_cpf(data.get('cpf')) 
+
     if motorista:
         return make_response('Cpf do motorista já existe', 400)
+
     motorista = Motorista(**data)
     motorista = dao_motorista.salvar(motorista)
     return make_response({
@@ -71,14 +78,20 @@ def update_motorista(id):
                     erros.append({'field': 'salario', 'mensage': 'Este campo só aceita números'})
                     break
 
+    if data.get('cpf') != None:
+        for i in data['cpf']:
+            if i.isdigit() == False:
+                if i not in '.' or i not in '-':
+                    erros.append({'field': 'cpf', 'mensage': 'Este campo só aceita números.'})
+                    break
+
     if erros:
         return make_response({'errors': erros}, 400)
 
     motoristaOld = dao_motorista.get_por_id(id)
 
-
     if not motoristaOld:
-        return make_response('O id informado não existe ')
+        return make_response({'erro': 'O id informado não existe'})
     
     motoristaNew = Motorista(**data)
     dao_motorista.update_motorista(motoristaNew, motoristaOld)
@@ -91,10 +104,8 @@ def delete_motorista(id):
 
     motorista = dao_motorista.get_por_id(id)
 
-    
-
     if not motorista:
-        return make_response('O id informado não existe ')
+        return make_response({'erro': 'O id informado não existe'})
     dao_motorista.delete_motorista(id)
     return make_response({
         'Detetado com sucesso': True

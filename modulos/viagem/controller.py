@@ -109,7 +109,7 @@ def update_viagem(id):
         return make_response({'erro': "id do motorista não existe."}, 400)
 
     if not viagemOld:
-        return make_response('O id informado não existe ')
+        return make_response({'erro': 'O id informado não existe.'})
     
     viagemNew = Viagem(**data)
     dao_viagem.update_viagem(viagemNew, viagemOld)
@@ -123,7 +123,7 @@ def delete_viagem(id):
     viagem = dao_viagem.get_por_id(id)
 
     if not viagem:
-        return make_response('O id informado não existe ')
+        return make_response({'erro': 'O id informado não existe'})
     dao_viagem.delete_viagem(id)
     return make_response({
         'Detetado com sucesso': True

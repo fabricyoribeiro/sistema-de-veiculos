@@ -29,10 +29,9 @@ def add_marca():
     if erros:
         return make_response({'errors': erros}, 400)
     
-    print(data.get('marca'))
     marca = dao_marca.get_by_marca(data.get('marca')) 
     if marca:
-        return make_response('Marca já existe', 400)
+        return make_response({'erro': 'Marca já existe'}, 400)
     marca = Marca(**data)
     marca = dao_marca.salvar(marca)
     return make_response({
@@ -63,7 +62,7 @@ def update_marca(id):
     marcaOld = dao_marca.get_por_id(id)
 
     if not marcaOld:
-        return make_response('O id informado não existe ')
+        return make_response({'erro': 'O id informado não existe.'})
     
     marcaNew = Marca(**data)
     dao_marca.update_marca(marcaNew, marcaOld)
@@ -77,7 +76,7 @@ def delete_marca(id):
     marca = dao_marca.get_por_id(id)
 
     if not marca:
-        return make_response('O id informado não existe ')
+        return make_response({'erro': 'O id informado não existe'})
     dao_marca.delete_marca(id)
     return make_response({
         'Detetado com sucesso': True
