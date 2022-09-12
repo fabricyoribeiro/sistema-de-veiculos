@@ -3,6 +3,7 @@ from modulos.veiculo.dao import VeiculoDao
 from modulos.viagem.dao import ViagemDao
 
 class Abastecimento:
+  VALUES = ['data_abastecimento', 'viagem_id', 'veiculo_id', 'posto_id', 'valor_gasto', 'km_atual']
   def __init__(self,data_abastecimento, viagem_id, veiculo_id, posto_id, valor_gasto, km_atual, id=None):
     self.id = id
     self.data_abastecimento = data_abastecimento

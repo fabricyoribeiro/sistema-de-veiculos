@@ -50,6 +50,7 @@ class AbastecimentoDao:
             return None
         data = dict(zip(coluns_name, abastecimento))
         abastecimento = Abastecimento(**data)
+        print(abastecimento)
         cursor.close()
         return abastecimento
 
@@ -61,7 +62,7 @@ class AbastecimentoDao:
             "veiculo_id", abastecimentoNew.veiculo_id,
             "posto_id", abastecimentoNew.posto_id,
             "valor_gasto", abastecimentoNew.valor_gasto,
-            "km_total", abastecimentoNew.km_total,
+            "km_atual", abastecimentoNew.km_atual,
             abastecimentoOld.id
         ))
         self.database.commit()
@@ -72,3 +73,5 @@ class AbastecimentoDao:
         cursor.execute(self._DELETE.format(self._TABLE_NAME, id))
         self.database.commit()
         cursor.close()
+    
+    
