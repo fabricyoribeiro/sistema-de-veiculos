@@ -83,17 +83,12 @@ def update_viagem(id):
         if key not in data.keys() or data[key] =='':
             erros.append({'field': key, 'mensage': "Este campo é obrigátorio."})
     
-    if data.get('veiculo_id') != None:
-        for i in data['veiculo_id']:
+    for key in ['veiculo_id', 'motorista_id']:
+        for i in data[key]:
             if i.isdigit()==False:
-                erros.append({'field': 'veiculo_id', 'mensage': 'Este campo só aceita números inteiros'})
+                erros.append({'field': key, 'mensage': 'Este campo só aceita números inteiros'})
                 break
     
-    if data.get('motorista_id') != None:
-        for i in data['motorista_id']:
-            if i.isdigit()==False:
-                erros.append({'field': 'motorista_id', 'mensage': 'Este campo só aceita números inteiros'})
-                break
 
     if erros:
         return make_response({'errors': erros}, 400)

@@ -5,7 +5,6 @@ from modulos.abastecimento.abastecimento import Abastecimento
 from modulos.abastecimento.dao import AbastecimentoDao
 from modulos.posto.dao import PostoDao
 
-
 from modulos.veiculo.dao import VeiculoDao
 
 from modulos.motorista.dao import MotoristaDao
@@ -33,10 +32,7 @@ def get_abastecimentos():
 @app_abastecimento.route(f'/{app_name}/add/', methods=['POST'])
 def add_abastecimento():
     data = request.form.to_dict(flat=True)
-    print(data.get('data_abastecimento'))
 
-
-    # return data
     erros = []
     for key in Abastecimento.VALUES:
         if key not in data.keys() or data[key] =='':
