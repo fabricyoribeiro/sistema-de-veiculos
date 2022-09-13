@@ -51,35 +51,22 @@ def add_abastecimento():
                     erros.append({'field': 'data_abastecimento', 'mensage': 'Este campo só aceita números'})
                     break
     
-    if data.get('viagem_id') != None:
-        for i in data['viagem_id']:
-            if i.isdigit()==False:
-                erros.append({'field': 'viagem_id', 'mensage': 'Este campo só aceita números inteiros'})
-                break
-    if data.get('veiculo_id') != None:
-        for i in data['veiculo_id']:
-            if i.isdigit()==False:
-                erros.append({'field': 'veiculo_id', 'mensage': 'Este campo só aceita números inteiros'})
-                break
-    
-    if data.get('posto_id') != None:
-        for i in data['posto_id']:
-            if i.isdigit()==False:
-                erros.append({'field': 'posto_id', 'mensage': 'Este campo só aceita números inteiros'})
-                break
-    
-    if data.get('valor_gasto') != None:
-        for i in data['valor_gasto']:
-            if i.isdigit() == False:
-                if i not in '.':
-                    erros.append({'field': 'valor_gasto', 'mensage': 'Este campo só aceita números'})
+    for key in ['viagem_id', 'veiculo_id', 'posto_id']:
+        if data.get(key) != None:
+            for i in data[key]:
+                if i.isdigit()==False:
+                    erros.append({'field': key, 'mensage': 'Este campo só aceita números inteiros'})
                     break
-    if data.get('km_atual') != None:
-        for i in data['km_atual']:
-            if i.isdigit() == False:
-                if i not in '.':
-                    erros.append({'field': 'km_atual', 'mensage': 'Este campo só aceita números'})
-                    break
+
+    for key in ['valor_gasto', 'km_atual']:
+        if data.get(key) != None:
+            for i in data[key]:
+                if i.isdigit() == False:
+                    if i not in '.':
+                        erros.append({'field': key, 'mensage': 'Este campo só aceita números'})
+                        break
+    
+
 
     if erros:
         return make_response({'errors': erros}, 400)
@@ -138,35 +125,21 @@ def update_abastecimento(id):
                     erros.append({'field': 'data_abastecimento', 'mensage': 'Este campo só aceita números'})
                     break
     
-    if data.get('viagem_id') != None:
-        for i in data['viagem_id']:
-            if i.isdigit()==False:
-                erros.append({'field': 'viagem_id', 'mensage': 'Este campo só aceita números inteiros'})
-                break
-    if data.get('veiculo_id') != None:
-        for i in data['veiculo_id']:
-            if i.isdigit()==False:
-                erros.append({'field': 'veiculo_id', 'mensage': 'Este campo só aceita números inteiros'})
-                break
-    
-    if data.get('posto_id') != None:
-        for i in data['posto_id']:
-            if i.isdigit()==False:
-                erros.append({'field': 'posto_id', 'mensage': 'Este campo só aceita números inteiros'})
-                break
-    if data.get('valor_gasto') != None:
-        for i in data['km_atual']:
-            if i.isdigit() == False:
-                if i not in '.':
-                    erros.append({'field': 'valor_gasto', 'mensage': 'Este campo só aceita números'})
+    for key in ['viagem_id', 'veiculo_id', 'posto_id']:
+        if data.get(key) != None:
+            for i in data[key]:
+                if i.isdigit()==False:
+                    erros.append({'field': key, 'mensage': 'Este campo só aceita números inteiros'})
                     break
+
+    for key in ['valor_gasto', 'km_atual']:
+        if data.get(key) != None:
+            for i in data[key]:
+                if i.isdigit() == False:
+                    if i not in '.':
+                        erros.append({'field': key, 'mensage': 'Este campo só aceita números'})
+                        break
     
-    if data.get('km_atual') != None:
-        for i in data['km_atual']:
-            if i.isdigit() == False:
-                if i not in '.':
-                    erros.append({'field': 'km_atual', 'mensage': 'Este campo só aceita números'})
-                    break
 
     if erros:
         return make_response({'errors': erros}, 400)
