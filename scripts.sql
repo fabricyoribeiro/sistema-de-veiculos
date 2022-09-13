@@ -45,7 +45,7 @@ create table if not exists viagem(
 
 create table if not exists abastecimento(
 	id serial primary key,
-    data_abastecimento varchar(10),
+    data_abastecimento date,
 	viagem_id int,
 	veiculo_id int,
     posto_id int,
